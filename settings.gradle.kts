@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "Runique"
 include(":app")
 include(":auth:data")
+include(":auth:domain")
