@@ -20,6 +20,8 @@
             <option value="$PROJECT_DIR$/core/presentation" />
             <option value="$PROJECT_DIR$/core/presentation/designsystem" />
             <option value="$PROJECT_DIR$/core/presentation/ui" />
+            <option value="$PROJECT_DIR$/run" />
+            <option value="$PROJECT_DIR$/run/data" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
