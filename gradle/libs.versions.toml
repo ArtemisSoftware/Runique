@@ -15,6 +15,7 @@ jetbrainsKotlinJvm = "1.9.0"
 androidTools = "31.2.2"
 ksp = "1.9.22-1.0.17"
 room = "2.6.1"
+desugar_jdk_libs = "2.0.4"
 
 # Project versions
 projectApplicationId = "com.artemissoftware.runique"
@@ -44,6 +45,10 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "room" }
 
+
+desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
+
+
 # tests
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -58,4 +63,8 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+
+# custom plugins
+
+runique-android-application = { id = "runique.android.application", version = "unspecified" }
 
