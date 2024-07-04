@@ -17,6 +17,8 @@ ksp = "1.9.22-1.0.17"
 room = "2.6.1"
 desugar_jdk_libs = "2.0.4"
 
+composeCompiler = "1.5.1" #"1.5.9"
+
 # Project versions
 projectApplicationId = "com.artemissoftware.runique"
 projectVersionName = "1.0"
@@ -67,4 +69,5 @@ jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrai
 # custom plugins
 
 runique-android-application = { id = "runique.android.application", version = "unspecified" }
+runique-android-application-compose = { id = "runique.android.application.compose", version = "unspecified" }
 

@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.runique.android.application)
+    alias(libs.plugins.runique.android.application.compose)
 }
 
 android {
@@ -12,12 +12,6 @@ android {
         }
     }
 
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
