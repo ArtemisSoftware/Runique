@@ -17,6 +17,9 @@ ksp = "1.9.22-1.0.17"
 room = "2.6.1"
 desugar_jdk_libs = "2.0.4"
 koin = "3.5.3"
+ktor = "2.3.8"
+ktorClientLogging = "2.3.8"
+ktorServerCallLogging = "2.3.7"
 
 composeCompiler = "1.5.1" #"1.5.9"
 
@@ -63,6 +66,17 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 
+# ktor
+
+ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorClientLogging" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+# others
+
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 
 
@@ -83,6 +97,7 @@ jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrai
 
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "room" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 # custom plugins
 
@@ -93,6 +108,7 @@ runique-android-library-compose = { id = "runique.android.library.compose", vers
 runique-android-feature-ui = { id = "runique.android.feature.ui", version = "unspecified" }
 runique-android-room = { id = "runique.android.room", version = "unspecified" }
 runique-jvm-library = { id = "runique.jvm.library", version = "unspecified" }
+runique-jvm-ktor = { id = "runique.jvm.ktor", version = "unspecified" }
 
 [bundles]
 
@@ -117,3 +133,14 @@ compose-debug = [
 
 koin = ["koin-core", "koin-android", "koin-android-workmanager"]
 koin-compose = ["koin-core", "koin-android", "koin-android-workmanager", "koin-androidx-compose"]
+
+# ktor
+
+ktor = [
+    "ktor-client-auth",
+    "ktor-client-cio",
+    "ktor-client-content-negotiation",
+    "ktor-client-core",
+    "ktor-client-logging",
+    "ktor-serialization-kotlinx-json"
+]
