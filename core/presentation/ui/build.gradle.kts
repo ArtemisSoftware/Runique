@@ -10,6 +10,8 @@ dependencies {
 
     implementation(libs.androidx.ui)
 
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
     implementation(projects.core.domain)
     implementation(projects.core.presentation.designsystem)
 }
