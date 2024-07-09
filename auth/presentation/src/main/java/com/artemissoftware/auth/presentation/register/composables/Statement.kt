@@ -28,10 +28,10 @@ fun Statement(
                 color = RuniqueGray
             )
         ) {
-            append(stringResource(id = R.string.already_have_an_account) + " ")
+            append(stringResource(id = text) + " ")
             pushStringAnnotation(
                 tag = "clickable_text",
-                annotation = stringResource(id = R.string.login)
+                annotation = stringResource(id = textToClick)
             )
             withStyle(
                 style = SpanStyle(
@@ -40,7 +40,7 @@ fun Statement(
                     fontFamily = Poppins
                 )
             ) {
-                append(stringResource(id = R.string.login))
+                append(stringResource(id = textToClick))
             }
         }
     }
