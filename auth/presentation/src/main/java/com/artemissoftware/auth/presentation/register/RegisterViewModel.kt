@@ -10,15 +10,28 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.artemissoftware.auth.domain.UserDataValidator
+import com.artemissoftware.auth.domain.repository.AuthRepository
+import com.artemissoftware.auth.presentation.R
+import com.artemissoftware.core.domain.util.DataError
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
+import com.artemissoftware.core.domain.util.Result
+import com.artemissoftware.core.presentation.ui.UiText
+import com.artemissoftware.core.presentation.ui.asUiText
 
 class RegisterViewModel(
-    private val userDataValidator: UserDataValidator
+    private val userDataValidator: UserDataValidator,
+    private val authRepository: AuthRepository
 ): ViewModel() {
 
     var state by mutableStateOf(RegisterState())
         private set
+
+    private val _uiEvent = Channel<RegisterUIEvent>()
+    val events = _uiEvent.receiveAsFlow()
 
     init {
         updateEmail()
@@ -26,7 +39,11 @@ class RegisterViewModel(
     }
 
     fun onTriggerEvent(event: RegisterEvent) {
-
+        when(event){
+            RegisterEvent.OnLoginClick -> TODO()
+            RegisterEvent.OnRegisterClick -> register()
+            RegisterEvent.OnTogglePasswordVisibilityClick -> updatePasswordVisibility()
+        }
     }
 
     private fun updateEmail(){
@@ -55,5 +72,38 @@ class RegisterViewModel(
                 )
             }
             .launchIn(viewModelScope)
+    }
+
+    private fun register() {
+        viewModelScope.launch {
+            state = state.copy(isRegistering = true)
+
+            val result = authRepository.register(
+                email = state.email.text.toString().trim(),
+                password = state.password.text.toString()
+            )
+            state = state.copy(isRegistering = false)
+
+            when(result) {
+                is Result.Error -> {
+                    if(result.error == DataError.Network.CONFLICT) {
+                        _uiEvent.send(RegisterUIEvent.Error(
+                            UiText.StringResource(R.string.error_email_exists)
+                        ))
+                    } else {
+                        _uiEvent.send(RegisterUIEvent.Error(result.error.asUiText()))
+                    }
+                }
+                is Result.Success -> {
+                    _uiEvent.send(RegisterUIEvent.RegistrationSuccess)
+                }
+            }
+        }
+    }
+
+    private fun updatePasswordVisibility(){
+        state = state.copy(
+            isPasswordVisible = !state.isPasswordVisible
+        )
     }
 }
