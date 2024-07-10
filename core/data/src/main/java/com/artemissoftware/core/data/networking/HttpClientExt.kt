@@ -1,5 +1,6 @@
-package com.artemissoftware.core.data
+package com.artemissoftware.core.data.networking
 
+import com.artemissoftware.core.data.BuildConfig
 import com.artemissoftware.core.domain.util.DataError
 import com.artemissoftware.core.domain.util.Result
 import io.ktor.client.HttpClient

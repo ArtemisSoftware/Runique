@@ -59,6 +59,9 @@ dependencies {
     // Timber
     implementation(libs.timber)
 
+    // Crypto
+    implementation(libs.androidx.security.crypto.ktx)
+
     //
 
     testImplementation(libs.junit)

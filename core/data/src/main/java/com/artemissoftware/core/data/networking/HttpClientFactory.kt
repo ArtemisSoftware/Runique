@@ -1,5 +1,6 @@
-package com.artemissoftware.core.data
+package com.artemissoftware.core.data.networking
 
+import com.artemissoftware.core.data.BuildConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
