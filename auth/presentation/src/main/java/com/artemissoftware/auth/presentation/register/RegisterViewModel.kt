@@ -31,7 +31,7 @@ class RegisterViewModel(
         private set
 
     private val _uiEvent = Channel<RegisterUIEvent>()
-    val events = _uiEvent.receiveAsFlow()
+    val uiEvent = _uiEvent.receiveAsFlow()
 
     init {
         updateEmail()
@@ -40,7 +40,7 @@ class RegisterViewModel(
 
     fun onTriggerEvent(event: RegisterEvent) {
         when(event){
-            RegisterEvent.OnLoginClick -> TODO()
+            RegisterEvent.OnLoginClick -> Unit
             RegisterEvent.OnRegisterClick -> register()
             RegisterEvent.OnTogglePasswordVisibilityClick -> updatePasswordVisibility()
         }

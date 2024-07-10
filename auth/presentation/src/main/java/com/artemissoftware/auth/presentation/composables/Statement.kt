@@ -1,9 +1,10 @@
-package com.artemissoftware.auth.presentation.register.composables
+package com.artemissoftware.auth.presentation.composables
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -19,13 +20,14 @@ import com.artemissoftware.core.presentation.designsystem.RuniqueTheme
 fun Statement(
     @StringRes text: Int,
     @StringRes textToClick: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    textColor: Color = RuniqueGray
 ) {
     val annotatedString = buildAnnotatedString {
         withStyle(
             style = SpanStyle(
                 fontFamily = Poppins,
-                color = RuniqueGray
+                color = textColor
             )
         ) {
             append(stringResource(id = text) + " ")
