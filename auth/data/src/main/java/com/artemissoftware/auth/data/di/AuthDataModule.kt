@@ -5,6 +5,7 @@ import com.artemissoftware.auth.data.repository.AuthRepositoryImpl
 import com.artemissoftware.auth.domain.PatternValidator
 import com.artemissoftware.auth.domain.UserDataValidator
 import com.artemissoftware.auth.domain.repository.AuthRepository
+import com.artemissoftware.auth.domain.usecase.LoginUseCase
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -14,5 +15,6 @@ val authDataModule = module {
         EmailPatternValidator
     }
     singleOf(::UserDataValidator)
+    singleOf(::LoginUseCase)
     singleOf(::AuthRepositoryImpl).bind<AuthRepository>()
 }

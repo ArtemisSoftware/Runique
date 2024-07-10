@@ -13,18 +13,18 @@ import com.artemissoftware.auth.domain.UserDataValidator
 import com.artemissoftware.auth.domain.repository.AuthRepository
 import com.artemissoftware.auth.presentation.R
 import com.artemissoftware.core.domain.util.DataError
+import com.artemissoftware.core.domain.util.Result
+import com.artemissoftware.core.presentation.ui.UiText
+import com.artemissoftware.core.presentation.ui.asUiText
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import com.artemissoftware.core.domain.util.Result
-import com.artemissoftware.core.presentation.ui.UiText
-import com.artemissoftware.core.presentation.ui.asUiText
 
 class RegisterViewModel(
     private val userDataValidator: UserDataValidator,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
 ): ViewModel() {
 
     var state by mutableStateOf(RegisterState())
