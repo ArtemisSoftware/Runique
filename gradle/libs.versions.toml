@@ -23,6 +23,7 @@ ktorClientLogging = "2.3.8"
 ktorServerCallLogging = "2.3.7"
 timber = "5.0.1"
 securityCryptoKtx = "1.1.0-alpha06"
+coreSplashscreen = "1.0.1"
 
 
 composeCompiler = "1.5.10"
@@ -83,8 +84,12 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 # others
 
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
+
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+
 androidx-security-crypto-ktx = { module = "androidx.security:security-crypto-ktx", version.ref = "securityCryptoKtx" }
+
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 
 # tests
 

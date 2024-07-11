@@ -1,4 +1,4 @@
-package com.artemissoftware.runique
+package com.artemissoftware.runique.navigation
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,10 +14,11 @@ import com.artemissoftware.auth.presentation.register.RegisterScreen
 @Composable
 fun RootNavGraph(
     navController: NavHostController,
+    isLoggedIn: Boolean,
 ) {
     NavHost(
         navController = navController,
-        startDestination = "auth"
+        startDestination = if(isLoggedIn) "run" else "auth"
     ) {
         authGraph(navController)
         runGraph(navController)

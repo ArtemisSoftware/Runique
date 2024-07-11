@@ -62,6 +62,8 @@ dependencies {
     // Crypto
     implementation(libs.androidx.security.crypto.ktx)
 
+    // Splash screen
+    implementation(libs.androidx.core.splashscreen)
     //
 
     testImplementation(libs.junit)
