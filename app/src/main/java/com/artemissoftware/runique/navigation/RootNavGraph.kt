@@ -10,6 +10,7 @@ import androidx.navigation.navigation
 import com.artemissoftware.auth.presentation.intro.IntroScreen
 import com.artemissoftware.auth.presentation.login.LoginScreen
 import com.artemissoftware.auth.presentation.register.RegisterScreen
+import com.artemissoftware.run.presentation.activerun.ActiveRunScreen
 import com.artemissoftware.run.presentation.overview.OverviewScreen
 
 @Composable
@@ -86,7 +87,15 @@ private fun NavGraphBuilder.runGraph(navController: NavHostController) {
         route = "run"
     ) {
         composable("run_overview") {
-            OverviewScreen()
+            OverviewScreen(
+                onStartRunClick = {
+                    navController.navigate("active_run")
+                }
+            )
+        }
+
+        composable("active_run") {
+            ActiveRunScreen()
         }
     }
 }

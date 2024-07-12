@@ -4,6 +4,7 @@ import android.app.Application
 import com.artemissoftware.auth.data.di.authDataModule
 import com.artemissoftware.auth.presentation.di.authViewModelModule
 import com.artemissoftware.core.data.di.coreDataModule
+import com.artemissoftware.run.presentation.di.runViewModelModule
 import com.artemissoftware.runique.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -25,7 +26,8 @@ class RuniqueApp: Application() {
                 authDataModule,
                 authViewModelModule,
                 appModule,
-                coreDataModule
+                coreDataModule,
+                runViewModelModule
             )
         }
     }
