@@ -12,6 +12,10 @@ dependencies {
     implementation(projects.run.domain)
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.google.android.gms.play.services.location)
+
+    implementation(libs.bundles.koin)
+
     //
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

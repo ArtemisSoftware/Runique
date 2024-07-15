@@ -24,6 +24,8 @@ ktorServerCallLogging = "2.3.7"
 timber = "5.0.1"
 securityCryptoKtx = "1.1.0-alpha06"
 coreSplashscreen = "1.0.1"
+coroutines = "1.8.0"
+gmsLocation = "21.2.0"
 
 
 composeCompiler = "1.5.10"
@@ -80,6 +82,14 @@ ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negoti
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorClientLogging" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+# kotlinx
+
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines"}
+
+# google
+
+google-android-gms-play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "gmsLocation"}
 
 # others
 
