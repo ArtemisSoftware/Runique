@@ -111,6 +111,10 @@ class RunningTracker(
             .launchIn(applicationScope)
     }
 
+    fun setIsTracking(isTracking: Boolean) {
+        this.isTracking.value = isTracking
+    }
+
     fun startObservingLocation() {
         isObservingLocation.value = true
     }

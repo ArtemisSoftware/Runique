@@ -3,14 +3,18 @@ package com.artemissoftware.run.presentation.activerun
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.artemissoftware.run.domain.models.RunningTracker
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import timber.log.Timber
 
 class ActiveRunViewModel(
@@ -20,14 +24,35 @@ class ActiveRunViewModel(
     var state by mutableStateOf(ActiveRunState())
         private set
 
-    private val _hasLocationPermission = MutableStateFlow(false)
-
     private val _uiEvent = Channel<ActiveRunUIEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
+    private val shouldTrack = snapshotFlow { state.shouldTrack }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = state.shouldTrack
+        )
+
+    private val hasLocationPermission = MutableStateFlow(false)
+
+    private val isTracking = combine(
+        shouldTrack,
+        hasLocationPermission
+    ) { shouldTrack, hasPermission ->
+        shouldTrack && hasPermission
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        initialValue = false
+    )
+
     init {
         observeLocationPermission()
+        observeIsTracking()
         observeCurrentLocation()
+        observeRunData()
+        observeElapsedTime()
     }
 
     fun onTriggerEvent(event: ActiveRunEvent) {
@@ -36,14 +61,20 @@ class ActiveRunViewModel(
 
             }
             ActiveRunEvent.OnResumeRunClick -> {
-
+                state = state.copy(shouldTrack = true)
+            }
+            ActiveRunEvent.OnBackClick -> {
+                state = state.copy(shouldTrack = false)
             }
             ActiveRunEvent.OnToggleRunClick -> {
-
+                state = state.copy(
+                    hasStartedRunning = true,
+                    shouldTrack = !state.shouldTrack
+                )
             }
             is ActiveRunEvent.SubmitLocationPermissionInfo -> {
                 updateLocationPermission(
-                    hasLocationPermission = event.showLocationRationale,
+                    isLocationPermissionGiven = event.showLocationRationale,
                     acceptedLocationPermission = event.acceptedLocationPermission
                 )
             }
@@ -57,10 +88,10 @@ class ActiveRunViewModel(
         }
     }
 
-    private fun updateLocationPermission(hasLocationPermission: Boolean, acceptedLocationPermission: Boolean){
-        _hasLocationPermission.value = acceptedLocationPermission
+    private fun updateLocationPermission(isLocationPermissionGiven: Boolean, acceptedLocationPermission: Boolean){
+        hasLocationPermission.value = acceptedLocationPermission
         state = state.copy(
-            showLocationRationale = hasLocationPermission
+            showLocationRationale = isLocationPermissionGiven
         )
     }
 
@@ -78,8 +109,9 @@ class ActiveRunViewModel(
     }
 
     private fun observeLocationPermission(){
-        _hasLocationPermission
+        hasLocationPermission
             .onEach { hasPermission ->
+                Timber.d("has Permission: $hasPermission")
                 if(hasPermission) {
                     runningTracker.startObservingLocation()
                 } else {
@@ -92,8 +124,38 @@ class ActiveRunViewModel(
     private fun observeCurrentLocation(){
         runningTracker
             .currentLocation
-            .onEach { location ->
-                Timber.d("New location: $location")
+            .onEach { currentLocation ->
+                Timber.d("current Location: $currentLocation")
+                state = state.copy(currentLocation = currentLocation?.location)
+            }
+            .launchIn(viewModelScope)
+    }
+
+    private fun observeIsTracking(){
+        isTracking
+            .onEach { isTracking ->
+                Timber.d("is Tracking: $isTracking")
+                runningTracker.setIsTracking(isTracking)
+            }
+            .launchIn(viewModelScope)
+    }
+
+    private fun observeRunData(){
+        runningTracker
+            .runData
+            .onEach {
+                Timber.d("run Data: $it")
+                state = state.copy(runData = it)
+            }
+            .launchIn(viewModelScope)
+    }
+
+    private fun observeElapsedTime(){
+        runningTracker
+            .elapsedTime
+            .onEach {
+                Timber.d("elapsed Time: $it")
+                state = state.copy(elapsedTime = it)
             }
             .launchIn(viewModelScope)
     }
