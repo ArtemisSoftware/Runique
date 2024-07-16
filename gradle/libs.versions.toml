@@ -26,7 +26,7 @@ securityCryptoKtx = "1.1.0-alpha06"
 coreSplashscreen = "1.0.1"
 coroutines = "1.8.0"
 gmsLocation = "21.2.0"
-
+maps = "4.3.3"
 
 composeCompiler = "1.5.10"
 
@@ -90,6 +90,7 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 # google
 
 google-android-gms-play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "gmsLocation"}
+google-maps-android-compose = { module = "com.google.maps.android:maps-compose", version.ref = "maps" }
 
 # others
 

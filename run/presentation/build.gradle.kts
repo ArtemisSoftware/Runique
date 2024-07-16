@@ -9,6 +9,6 @@ android {
 dependencies {
     implementation(projects.core.domain)
     implementation(projects.run.domain)
-
+    implementation(libs.google.maps.android.compose)
     implementation(libs.timber)
 }

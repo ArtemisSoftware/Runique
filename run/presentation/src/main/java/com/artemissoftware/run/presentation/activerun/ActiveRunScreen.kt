@@ -33,6 +33,7 @@ import com.artemissoftware.core.presentation.designsystem.composables.scaffold.R
 import com.artemissoftware.core.presentation.designsystem.composables.toolbar.RuniqueToolbar
 import com.artemissoftware.run.presentation.R
 import com.artemissoftware.run.presentation.activerun.composables.RunDataCard
+import com.artemissoftware.run.presentation.activerun.composables.maps.TrackerMap
 import com.artemissoftware.run.presentation.util.hasLocationPermission
 import com.artemissoftware.run.presentation.util.hasNotificationPermission
 import com.artemissoftware.run.presentation.util.shouldShowLocationPermissionRationale
@@ -142,6 +143,14 @@ private fun ActiveRunScreenContent(
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.surface)
         ) {
+            TrackerMap(
+                isRunFinished = state.isRunFinished,
+                currentLocation = state.currentLocation,
+                locations = state.runData.locations,
+                onSnapshot = {},
+                modifier = Modifier
+                    .fillMaxSize()
+            )
             RunDataCard(
                 elapsedTime = state.elapsedTime,
                 runData = state.runData,
