@@ -35,6 +35,7 @@ import com.artemissoftware.core.presentation.designsystem.composables.toolbar.Ru
 import com.artemissoftware.run.presentation.R
 import com.artemissoftware.run.presentation.activerun.composables.RunDataCard
 import com.artemissoftware.run.presentation.activerun.composables.maps.TrackerMap
+import com.artemissoftware.run.presentation.activerun.service.ActiveRunService
 import com.artemissoftware.run.presentation.util.hasLocationPermission
 import com.artemissoftware.run.presentation.util.hasNotificationPermission
 import com.artemissoftware.run.presentation.util.shouldShowLocationPermissionRationale
@@ -43,10 +44,12 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ActiveRunScreen(
+    onServiceToggle: (isServiceRunning: Boolean) -> Unit,
     viewModel: ActiveRunViewModel = koinViewModel(),
 ) {
     ActiveRunScreenContent(
         state = viewModel.state,
+        onServiceToggle = onServiceToggle,
         onEvent = viewModel::onTriggerEvent
     )
 }
@@ -54,6 +57,7 @@ fun ActiveRunScreen(
 @Composable
 private fun ActiveRunScreenContent(
     state: ActiveRunState,
+    onServiceToggle: (isServiceRunning: Boolean) -> Unit,
     onEvent: (ActiveRunEvent) -> Unit
 ) {
     val context = LocalContext.current
@@ -105,6 +109,18 @@ private fun ActiveRunScreenContent(
 
         if(!showLocationRationale && !showNotificationRationale) {
             permissionLauncher.requestRuniquePermissions(context)
+        }
+    }
+
+    LaunchedEffect(key1 = state.isRunFinished) {
+        if(state.isRunFinished) {
+            onServiceToggle(false)
+        }
+    }
+
+    LaunchedEffect(key1 = state.shouldTrack) {
+        if(context.hasLocationPermission() && state.shouldTrack && !ActiveRunService.isServiceActive) {
+            onServiceToggle(true)
         }
     }
 
@@ -251,7 +267,8 @@ private fun ActiveRunScreenContentPreview() {
     RuniqueTheme {
         ActiveRunScreenContent(
             state = ActiveRunState(),
-            onEvent = {}
+            onEvent = {},
+            onServiceToggle = {}
         )
     }
 }
