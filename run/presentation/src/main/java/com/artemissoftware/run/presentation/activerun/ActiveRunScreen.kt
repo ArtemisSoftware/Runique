@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.artemissoftware.core.presentation.designsystem.RuniqueTheme
 import com.artemissoftware.core.presentation.designsystem.StartIcon
 import com.artemissoftware.core.presentation.designsystem.StopIcon
+import com.artemissoftware.core.presentation.designsystem.composables.buttons.RuniqueButton
 import com.artemissoftware.core.presentation.designsystem.composables.buttons.RuniqueFloatingActionButton
 import com.artemissoftware.core.presentation.designsystem.composables.buttons.RuniqueOutlinedButton
 import com.artemissoftware.core.presentation.designsystem.composables.dialog.RuniqueDialog
@@ -160,6 +161,36 @@ private fun ActiveRunScreenContent(
                     .fillMaxWidth()
             )
         }
+    }
+
+    if (!state.shouldTrack && state.hasStartedRunning) {
+        RuniqueDialog(
+            title = stringResource(id = R.string.running_is_paused),
+            onDismiss = {
+                onEvent(ActiveRunEvent.OnResumeRunClick)
+            },
+            description = stringResource(id = R.string.resume_or_finish_run),
+            primaryButton = {
+                RuniqueButton(
+                    text = stringResource(id = R.string.resume),
+                    isLoading = false,
+                    onClick = {
+                        onEvent(ActiveRunEvent.OnResumeRunClick)
+                    },
+                    modifier = Modifier.weight(1f)
+                )
+            },
+            secondaryButton = {
+                RuniqueOutlinedButton(
+                    text = stringResource(id = R.string.finish),
+                    isLoading = state.isSavingRun,
+                    onClick = {
+                        onEvent(ActiveRunEvent.OnFinishRunClick)
+                    },
+                    modifier = Modifier.weight(1f)
+                )
+            }
+        )
     }
 
     if (state.showLocationRationale || state.showNotificationRationale) {
